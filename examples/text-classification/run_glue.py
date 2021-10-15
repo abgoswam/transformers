@@ -172,6 +172,14 @@ class ModelArguments:
             "with private models)."
         },
     )
+    reg_loss_wgt: Optional[float] = field(
+        default=0.0,
+        metadata={"help": "Regularization Loss Weight"},
+    )
+    masking_prob: Optional[float] = field(
+        default=0.0,
+        metadata={"help": "Token Masking Probability"},
+    )
 
 
 def main():
@@ -301,6 +309,8 @@ def main():
         cache_dir=model_args.cache_dir,
         revision=model_args.model_revision,
         use_auth_token=True if model_args.use_auth_token else None,
+        reg_loss_wgt=model_args.reg_loss_wgt,
+        masking_prob=model_args.masking_prob,
     )
     tokenizer = AutoTokenizer.from_pretrained(
         model_args.tokenizer_name if model_args.tokenizer_name else model_args.model_name_or_path,
